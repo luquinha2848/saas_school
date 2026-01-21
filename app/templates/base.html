@@ -12,57 +12,56 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="wrapper">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h3><a href="{{ url_for('index') }}"><i class="fa-solid fa-music"></i> Dó Ré Mi</a></h3>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h1><a href="{{ url_for('index') }}"><i class="fa-solid fa-music"></i> Dó Ré Mi</a></h1>
             </div>
-            <ul class="sidebar-nav">
-                <li><a href="{{ url_for('index') }}" class="nav-link {% if title == 'Página Inicial' %}active{% endif %}"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
-                <li><a href="{{ url_for('alunos') }}" class="nav-link {% if title == 'Gestão de Alunos' %}active{% endif %}"><i class="fa-solid fa-user-graduate"></i> <span>Alunos</span></a></li>
-                <li><a href="{{ url_for('professores') }}" class="nav-link {% if title == 'Gestão de Professores' %}active{% endif %}"><i class="fa-solid fa-chalkboard-user"></i> <span>Professores</span></a></li>
-                <li><a href="{{ url_for('cursos') }}" class="nav-link {% if title == 'Gestão de Cursos' %}active{% endif %}"><i class="fa-solid fa-music"></i> <span>Cursos</span></a></li>
-                <li><a href="#" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Agendamento</span></a></li>
-                <li><a href="#" class="nav-link"><i class="fa-solid fa-signature"></i> <span>Assinatura</span></a></li>
-                <li><a href="{{ url_for('financeiro') }}" class="nav-link {% if title == 'Gestão Financeira' %}active{% endif %}"><i class="fa-solid fa-wallet"></i> <span>Financeiro</span></a></li>
-            </ul>
-            <div class="sidebar-profile">
-                <i class="fa-solid fa-user-circle"></i> <span>Perfil</span>
-            </div>
-        </aside>
+            <button class="navbar-toggler" id="navbarToggler">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="navbar-collapse" id="navbarCollapse">
+                <div class="navbar-content">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link {% if title == 'Página Inicial' %}active{% endif %}" href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
+                        <li class="nav-item"><a class="nav-link {% if title == 'Gestão de Alunos' %}active{% endif %}" href="{{ url_for('alunos') }}"><i class="fa-solid fa-user-graduate"></i> <span>Alunos</span></a></li>
+                        <li class="nav-item"><a class="nav-link {% if title == 'Gestão de Professores' %}active{% endif %}" href="{{ url_for('professores') }}"><i class="fa-solid fa-chalkboard-user"></i> <span>Professores</span></a></li>
+                        <li class="nav-item"><a class="nav-link {% if title == 'Gestão de Cursos' %}active{% endif %}" href="{{ url_for('cursos') }}"><i class="fa-solid fa-music"></i> <span>Cursos</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa-solid fa-calendar-days"></i> <span>Agendamento</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa-solid fa-signature"></i> <span>Assinatura</span></a></li>
+                        <li class="nav-item"><a class="nav-link {% if title == 'Gestão Financeira' %}active{% endif %}" href="{{ url_for('financeiro') }}"><i class="fa-solid fa-wallet"></i> <span>Financeiro</span></a></li>
+                    </ul>
 
-        <div class="main-content" id="main-content">
-            <header class="header">
-                <button class="sidebar-toggle" id="sidebar-toggle">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <div class="header-title">
-                    <h2>{{ title }}</h2>
+                    <div class="navbar-profile">
+                        <i class="fa-solid fa-user-circle"></i>
+                    </div>
                 </div>
-            </header>
+            </div>
+        </nav>
+    </header>
 
-            <main>
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        <div class="flash-messages-container">
-                            {% for category, message in messages %}
-                                <div class="flash-message flash-{{ category }}">
-                                    <span>{{ message }}</span>
-                                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                {% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages-container">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        <span>{{ message }}</span>
+                        <button class="flash-close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
 
-                {% block content %}{% endblock %}
-            </main>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 
-            <footer>
-                <p>&copy; 2024 Dó Ré Mi. Todos os direitos reservados.</p>
-            </footer>
-        </div>
-    </div>
+    <footer>
+        <p>&copy; 2024 Dó Ré Mi. Todos os direitos reservados.</p>
+    </footer>
+
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
