@@ -1,0 +1,18 @@
+.data-table {
+    table-layout: fixed;
+    width: 100%;
+}
+.resizer {
+    position: absolute;
+    top: 0;
+    right: -4px;
+    width: 8px;
+    height: 100%;
+    cursor: col-resize;
+    user-select: none;
+    background-color: transparent;
+    z-index: 10;
+}
+th {
+    position: relative;
+}
