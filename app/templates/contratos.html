@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Gestão de Contratos</h2>
+        <p>Visualize e gerencie os contratos dos alunos.</p>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <a href="{{ url_for('novo_contrato') }}" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i> Novo Contrato
+            </a>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Aluno</th>
+                    <th>Plano</th>
+                    <th>Valor Mensal</th>
+                    <th>Início</th>
+                    <th>Fim</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contrato in contratos %}
+                <tr>
+                    <td>{{ contrato.aluno_nome }}</td>
+                    <td>{{ contrato.plano_descricao }}</td>
+                    <td>R$ {{ "%.2f"|format(contrato.valor_mensal) }}</td>
+                    <td>{{ contrato.data_inicio.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ contrato.data_fim.strftime('%d/%m/%Y') }}</td>
+                    <td><span class="status-{{ 'active' if contrato.status == 'ativo' else 'inactive' }}">{{ contrato.status|capitalize }}</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="text-align: center;">Nenhum contrato encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Registrar Nova Aula</h2>
+        <p>Preencha os detalhes da aula ministrada.</p>
+    </div>
+
+    <div class="form-container" style="max-width: 700px; margin: 0 auto;">
+        <form method="POST" action="{{ url_for('nova_aula') }}">
+            <div class="form-group">
+                <label for="aluno_id">Aluno</label>
+                <select id="aluno_id" name="aluno_id" required>
+                    <option value="" disabled selected>Selecione o aluno</option>
+                    {% for aluno in alunos %}
+                        <option value="{{ aluno.id }}">{{ aluno.nome_completo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="professor_id">Professor</label>
+                <select id="professor_id" name="professor_id" required>
+                    <option value="" disabled selected>Selecione o professor</option>
+                    {% for professor in professores %}
+                        <option value="{{ professor.id }}">{{ professor.nome_completo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="data_aula">Data da Aula</label>
+                <input type="date" id="data_aula" name="data_aula" required>
+            </div>
+            <div class="form-group">
+                <label for="conteudo">Conteúdo Aplicado</label>
+                <textarea id="conteudo" name="conteudo" rows="4" placeholder="Descreva o que foi ensinado..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="observacoes">Observações</label>
+                <textarea id="observacoes" name="observacoes" rows="3" placeholder="Comentários sobre o desempenho, dificuldades, etc."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success" style="margin-top: 1rem;">Registrar Aula</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

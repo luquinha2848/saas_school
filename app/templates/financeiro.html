@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Gestão Financeira</h2>
+        <p>Controle suas contas a pagar e a receber.</p>
+    </div>
+
+    <!-- Contas a Receber -->
+    <div class="table-container">
+        <h3>Contas a Receber</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Vencimento</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in a_receber %}
+                <tr>
+                    <td>{{ item.descricao }}</td>
+                    <td>R$ {{ "%.2f"|format(item.valor) }}</td>
+                    <td>{{ item.data_vencimento.strftime('%d/%m/%Y') }}</td>
+                    <td><span class="status-{{ 'paid' if item.status == 'pago' else 'pending' }}">{{ item.status|capitalize }}</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Nenhuma conta a receber encontrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Contas a Pagar -->
+    <div class="table-container" style="margin-top: 2rem;">
+        <h3>Contas a Pagar</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Vencimento</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in a_pagar %}
+                <tr>
+                    <td>{{ item.descricao }}</td>
+                    <td>R$ {{ "%.2f"|format(item.valor) }}</td>
+                    <td>{{ item.data_vencimento.strftime('%d/%m/%Y') }}</td>
+                    <td><span class="status-{{ 'paid' if item.status == 'pago' else 'pending' }}">{{ item.status|capitalize }}</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Nenhuma conta a pagar encontrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

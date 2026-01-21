@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Gestão de Professores</h2>
+        <p>Gerencie os professores da escola.</p>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <a href="{{ url_for('novo_professor') }}" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i> Novo Professor
+            </a>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for professor in professores %}
+                <tr>
+                    <td>{{ professor.nome_completo }}</td>
+                    <td>{{ professor.email }}</td>
+                    <td>{{ professor.telefone }}</td>
+                    <td><span class="status-{{ 'active' if professor.ativo else 'inactive' }}">{{ 'Ativo' if professor.ativo else 'Inativo' }}</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Nenhum professor encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

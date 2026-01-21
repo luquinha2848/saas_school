@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Inserir Novo Aluno</h2>
+        <p>Preencha os dados abaixo para adicionar um novo aluno ao sistema.</p>
+    </div>
+
+    <div class="form-container" style="max-width: 600px; margin: 0 auto;">
+        <form method="POST" action="{{ url_for('novo_aluno') }}" novalidate>
+            <div class="form-group">
+                <label for="nome_completo">Nome Completo</label>
+                <input type="text" id="nome_completo" name="nome_completo" value="{{ form_data.nome_completo if form_data else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="data_nascimento">Data de Nascimento</label>
+                <input type="date" id="data_nascimento" name="data_nascimento" value="{{ form_data.data_nascimento if form_data else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" value="{{ form_data.email if form_data else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" name="telefone" value="{{ form_data.telefone if form_data else '' }}" required>
+            </div>
+
+            <div class="form-group-checkbox">
+                <input type="checkbox" id="menor_idade" name="menor_idade" {% if form_data and form_data.menor_idade %}checked{% endif %}>
+                <label for="menor_idade">É menor de idade e necessita de um responsável?</label>
+            </div>
+
+            <div id="responsavel-fields" style="display: {% if form_data and form_data.menor_idade %}block{% else %}none{% endif %};">
+                <hr>
+                <h4>Dados do Responsável</h4>
+                <div class="form-group">
+                    <label for="responsavel_nome">Nome Completo do Responsável</label>
+                    <input type="text" id="responsavel_nome" name="responsavel_nome" value="{{ form_data.responsavel_nome if form_data else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="responsavel_telefone">Telefone do Responsável</label>
+                    <input type="tel" id="responsavel_telefone" name="responsavel_telefone" value="{{ form_data.responsavel_telefone if form_data else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="responsavel_parentesco">Parentesco</label>
+                    <input type="text" id="responsavel_parentesco" name="responsavel_parentesco" value="{{ form_data.responsavel_parentesco if form_data else '' }}">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success" style="margin-top: 1rem;">Salvar Aluno</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

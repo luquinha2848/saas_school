@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="table-container">
+        <div class="table-header">
+            <div class="toolbar-top">
+                <form method="GET" action="{{ url_for('alunos') }}" class="search-container">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" name="query" placeholder="Pesquisar por nome ou e-mail..." value="{{ query or '' }}">
+                </form>
+                <button class="btn btn-filter">
+                    <i class="fa-solid fa-filter"></i> Filtro
+                </button>
+            </div>
+            <div class="toolbar-bottom">
+                <a href="{{ url_for('novo_aluno') }}" class="btn btn-success">
+                    <i class="fa-solid fa-plus"></i> Inserir
+                </a>
+            </div>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nome do Aluno</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aluno in alunos %}
+                <tr>
+                    <td class="student-name-cell">
+                        <div class="actions-dropdown-container">
+                            <button class="actions-dropdown-toggle">
+                                <i class="fa-solid fa-gear"></i>
+                            </button>
+                            <div class="actions-dropdown-menu">
+                                <a href="{{ url_for('visualizar_aluno', aluno_id=aluno['id']) }}" class="actions-dropdown-item">
+                                    <i class="fa-solid fa-eye"></i> Visualizar
+                                </a>
+                                <a href="{{ url_for('editar_aluno', aluno_id=aluno['id']) }}" class="actions-dropdown-item">
+                                    <i class="fa-solid fa-pencil"></i> Editar
+                                </a>
+                                <form action="{{ url_for('excluir_aluno', aluno_id=aluno['id']) }}" method="POST" onsubmit="return confirm('Deseja concluir o processo de exclusão?');" style="display: inline;">
+                                    <button type="submit" class="actions-dropdown-item btn-delete">
+                                        <i class="fa-solid fa-trash"></i> Excluir
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        {{ aluno['nome_completo'] }}
+                    </td>
+                    <td>{{ aluno['email'] }}</td>
+                    <td>{{ aluno['telefone'] }}</td>
+                    <td>
+                        <span class="status-{{ 'active' if aluno['ativo'] else 'inactive' }}">
+                            {{ 'Ativo' if aluno['ativo'] else 'Inativo' }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination-container">
+            <div class="pagination">
+                <a href="{{ url_for('alunos', page=pagination.prev_num, query=query) }}" class="btn-pagination {{ 'disabled' if not pagination.has_prev else '' }}">Anterior</a>
+                {% set left_edge=2 %}
+                {% set left_current=2 %}
+                {% set right_current=5 %}
+                {% set right_edge=2 %}
+                {% set last = 0 %}
+                {% for page_num in pagination.iter_pages %}
+                    {% if page_num %}
+                        {% if page_num <= left_edge or (page_num > pagination.page - left_current - 1 and page_num < pagination.page + right_current) or page_num > pagination.pages - right_edge %}
+                            {% if last + 1 != page_num %}
+                                <span class="pagination-ellipsis">…</span>
+                            {% endif %}
+                            <a href="{{ url_for('alunos', page=page_num, query=query) }}" class="btn-pagination {{ 'active' if page_num == pagination.page else '' }}">{{ page_num }}</a>
+                            {% set last = page_num %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <a href="{{ url_for('alunos', page=pagination.next_num, query=query) }}" class="btn-pagination {{ 'disabled' if not pagination.has_next else '' }}">Próximo</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Registro de Aulas</h2>
+        <p>Visualize o histórico de aulas ministradas.</p>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <a href="{{ url_for('nova_aula') }}" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i> Registrar Nova Aula
+            </a>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Aluno</th>
+                    <th>Professor</th>
+                    <th>Conteúdo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aula in aulas %}
+                <tr>
+                    <td>{{ aula.data_aula.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ aula.aluno_nome }}</td>
+                    <td>{{ aula.professor_nome }}</td>
+                    <td>{{ aula.conteudo|truncate(100) }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Nenhuma aula registrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
